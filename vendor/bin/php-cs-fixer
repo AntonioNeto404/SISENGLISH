@@ -1,4 +1,18 @@
 #!/usr/bin/env php
+
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+;
+
+return (new PhpCsFixer\Config())
+    ->setRules([
+        '@PSR12' => true,
+        // Adicione outras regras conforme necessário
+    ])
+    ->setFinder($finder);
+
 <?php
 
 /**
