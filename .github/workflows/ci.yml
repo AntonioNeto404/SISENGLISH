@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Set up PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+        coverage: xdebug
+
+    # Install dependencies
+    - name: Install dependencies
+      run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+    # Code style check
+    - name: PHP CS Fixer
+      run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+    # Run tests
+    - name: Run PHPUnit
+      run: vendor/bin/phpunit --configuration phpunit.xml --colors=always --coverage-text
+
+    # Upload coverage report
+    - name: Upload coverage to Codecov
+      if: success()
+      uses: codecov/codecov-action@v3
+      with:
+        files: coverage.xml

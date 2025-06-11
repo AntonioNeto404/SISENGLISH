@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php" colors="true" verbose="true">
+    <testsuites>
+        <testsuite name="Models">
+            <directory>tests/Models</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">models</directory>
+        </include>
+    </coverage>
+</phpunit>
